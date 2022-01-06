@@ -56,7 +56,7 @@ public class aplication {
 			 //atualizando as datas de entrada e saida 
 			 reservation.updateDates(checkin, checkout);
 			 //imprimindo as novas datas de entrada e saida
-			 System.out.println("reservation: "+ reservation);
+			 System.out.println("reservation:"+ reservation);
 			
 		 }
 
