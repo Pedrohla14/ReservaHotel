@@ -1,8 +1,10 @@
-package etities;
+package model_etities;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import model_exeptions.DomainExeption;
 
 public class Reservation {
 	private Integer roomNumber;
@@ -14,8 +16,8 @@ public class Reservation {
 	
 	
 
-	public Reservation(Integer roomNumber, Date checkin, Date checkout) {
-		
+	public Reservation(Integer roomNumber, Date checkin, Date checkout) throws DomainExeption {
+		tratamentoDeErro(checkin,checkout);
 		this.roomNumber = roomNumber;
 		this.checkin = checkin;
 		this.checkout = checkout;
@@ -59,19 +61,24 @@ public class Reservation {
         long diffrence = time.convert(diff, TimeUnit.MILLISECONDS);
         return diffrence;
 	}
-	public String updateDates(Date checkin, Date checkout) {
-		 Date date = new Date();
-		 if(checkin.before(date)|| checkout.before(date)) {
-			 return "Error in reservation: Reservation dates for update must be future ";
-		 }
-		if  (!checkout.after(checkin)) {
-			 return "Error in reservation: Check-out date must be after check-in date";
-			 
-		 }
+	
+	public void updateDates(Date checkin, Date checkout) throws DomainExeption {
+		tratamentoDeErro(checkin,checkout);
 		
 		this.checkin=checkin;
 		this.checkout=checkout;
-		return null;
+		
+	}
+	
+	public void tratamentoDeErro(Date checkin, Date checkout) throws DomainExeption {
+		 Date date = new Date();
+		 if(checkin.before(date)|| checkout.before(date)) {//uso esse trtamento IllegalArgumentException() quando os argumentos são ínvalidos 
+			throw new DomainExeption("Error in reservation: Reservation dates for update must be future ") ;
+		 }
+		if  (!checkout.after(checkin)) {
+			throw new DomainExeption( "Error in reservation: Check-out date must be after check-in date");
+			 
+		 }
 	}
 
 	@Override
