@@ -45,20 +45,19 @@ public class aplication {
 		  * ao usuario, umas das maneiras de fazer isso é da forma a seguir, porém não é uma boa prática*/
 		 
 		 Date date = new Date();
-		 if(checkin.before(date)|| checkout.before(date)) {
-			 System.out.println("Error in reservation: Reservation dates for update must be future ");
-		 }
-		 else if (!checkout.after(checkin)) {
-			 System.out.println("Error in reservation: Check-out date must be after check-in date");
-			 
-		 }
-		 else {//se nenhum dos erros anteriores surgirem a data vai ser atualizada 
+		 
+		//se nenhum dos erros anteriores surgirem a data vai ser atualizada 
 			 //atualizando as datas de entrada e saida 
-			 reservation.updateDates(checkin, checkout);
+		String error=reservation.updateDates(checkin, checkout);
+		
+		if (error!=null) {
+			System.out.println("erro in reservation: "+ error);
+		}
+		else {
 			 //imprimindo as novas datas de entrada e saida
 			 System.out.println("reservation:"+ reservation);
-			
-		 }
+		}
+		
 
 		
 		
